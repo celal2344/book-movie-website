@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookandMovies</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- BootstrapTable CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.css">
+    <link href="/style.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <!-- login page -->
+    <div class="container mt-5" id="login-page">
+        <div class="card mx-auto" style="max-width: 400px;">
+            <div id="login-header" class="card-header bg-success text-white text-center">
+                <h2>Login</h2>
+            </div>
+            <div class="card-body">
+                <form action="#" id="login-form" method="post" class="needs-validation" novalidate>
+                    <div class="form-group">
+                        <label for="l-username">Username or Email:</label>
+                        <input type="text" class="form-control" id="l-username" name="username" autocomplete="username"
+                            required>
+                        <div class="invalid-feedback" id="l-username-error">
+                            Please provide a username
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="l-password">Password:</label>
+                        <input type="password" class="form-control" id="l-password" name="password" required>
+                        <div class="invalid-feedback" id="l-password-error">
+                            Please provide a password.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" id="login-button" onclick="loginSubmit()"
+                            class="btn btn-success btn-block">Login</button>
+                        <div class="alert-danger" id="user-not-exist-error"
+                            style="margin-top: 1vh; border-radius: 5px; padding: 0.5vh;" hidden>
+                            User doesn't exist please create an account.
+                        </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <p>New user? <a href="#" onclick="registerScreen()" class="text-info">Create an account</a></p>
+                    </div>
+                </form>
+                <form id="register-form" action="#" class="needs-validation" method="post" novalidate hidden>
+                    <div class="form-group">
+                        <label for="r-username">New Username:</label>
+                        <input type="text" class="form-control" id="r-username" name="newUsername" required>
+                        <div class="invalid-feedback" id="r-username-error">
+                            Please provide a username
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="r-email">New E-mail:</label>
+                        <input type="text" class="form-control" id="r-email" name="newEmail" required>
+                        <div class="invalid-feedback" id="r-email-error">
+                            Please provide an email
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="r-password">New Password:</label>
+                        <input type="password" class="form-control" id="r-password" name="newPassword" required>
+                        <div class="invalid-feedback" id="r-password-error">
+                            Please provide a password
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="r-conf-password">Confirm Password:</label>
+                        <input type="password" class="form-control" id="r-conf-password" name="confirmPassword"
+                            required>
+                        <div class="invalid-feedback" id="r-conf-password-error">
+                            Please confirm your password
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block" onclick="registerSubmit()"
+                            id="register-button">Register</button>
+                    </div>
+                    <div class="form-group text-center">
+                        <p>Already have an account? <a href="#" class="text-info" onclick="loginScreen()"
+                                id="loginLink">Login</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- main page -->
+    <div id="main-page" hidden>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#" onclick="showMainPage()">Welcome<span id="admin-tag"
+                    hidden>(Admin)</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav align-items-lg-center ms-auto me-lg-5">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showBooksPage()">Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showMoviesPage()">Movies</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            User
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" onclick="showUserBooks()" id="book-user-button" href="#">Books</a>
+                            <a class="dropdown-item" onclick="showUserMovies()" id="movie-user-button"
+                                href="#">Movies</a>
+                        </div>
+                    </li>
+                    <li class="nav-item" id="edit-nav" hidden>
+                        <a class="nav-link" href="#" onclick="showEditPage()">Edit</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div id="welcome">
+            <section class="hero-section" id="section_1">
+                <div class="section-overlay"></div>
+                <div class="container d-flex justify-content-center align-items-center">
+                    <div class="row">
+    
+                        <div class="col-12 mt-auto mb-5 text-center">
+                            <small>Rate your favorite books and movies</small>
+    
+                            <h1 class="text-white mb-5">Boovie</h1>
+    
+                            <a class="btn custom-btn smoothscroll"  onclick="showBooksPage()" href="#">Book</a>
+                            <a class="btn custom-btn smoothscroll" href="#" onclick="showMoviesPage()">Movie</a>
+                        </div>
+    
+                        <div class="col-lg-12 col-12 mt-auto d-flex flex-column flex-lg-row text-center mx-auto">
+                                <h5 class="text-white mx-auto">
+                                    <hr>Database Managament Project
+                                </h5>
+                                <h5 class="text-white mx-auto">
+                                    <hr>Celal Özdemir, Gufran Güneş
+                                </h5>
+                        </div>
+                    </div>
+                </div>
+                <img src="https://media.giphy.com/media/8O6EY0lahfInC/giphy.gif" alt="" class="video-wrap">
+            </section>
+        </div>
+        <div id="books-container" hidden>
+            <h2>Books</h2>
+            <table class="table" id="book-table">
+            </table>
+        </div>
+        <div class="modal" tabindex="-1" id="rating-modal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" onclick="closeModal()"
+                            aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="rating-select">Leave a rating</label>
+                        <select id="rating-select" class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                        <div class="form-group">
+                            <label for="comment">Leave a comment</label>
+                            <textarea class="form-control" id="comment" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="save-rating">Save changes</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()"
+                            data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="movies-container" hidden>
+            <h2>Movies</h2>
+            <table class="table" id="movie-table">
+            </table>
+        </div>
+        <div id="comments-page" hidden>
+            <h2 id="comments-page-header">Comments</h2>
+            <table class="table" id="comment-table"></table>
+        </div>
+        <div id="edit-page" hidden>
+            <div id="edit-lists" class="row">
+                <div class="col-md-6">
+                    <h2>Books</h2>
+                    <button class="btn btn-success" onclick="showAddBookPage()">Add book</button>
+                    <table class="table" id="book-edit-table">
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <h2>Movies</h2>
+                    <button class="btn btn-success" onclick="showAddMoviePage()">Add movie</button>
+                    <table class="table" id="movie-edit-table">
+                    </table>
+                </div>
+            </div>
+            <div id="edit-book" hidden>
+                <h2>Edit Book</h2>
+                <div class="mb-3">
+                    <label for="edit-book-title" class="form-label">Title:</label>
+                    <input type="text" class="form-control" id="edit-book-title">
+                </div>
+
+                <div class="mb-3">
+                    <label for="edit-book-author" class="form-label">Author:</label>
+                    <input type="text" class="form-control" id="edit-book-author">
+                </div>
+
+                <div class="mb-3">
+                    <label for="edit-book-genre" class="form-label">Genre:</label>
+                    <input type="text" class="form-control" id="edit-book-genre">
+                </div>
+                <button class="btn btn-success" id="edit-book-save" onclick="saveBookChanges()">Save Changes</button>
+            </div>
+        </div>
+        <div id="edit-movie" hidden>
+            <h2>Edit Movie</h2>
+            <div class="mb-3">
+                <label for="edit-movie-title" class="form-label">Title:</label>
+                <input type="text" class="form-control" id="edit-movie-title">
+            </div>
+
+            <div class="mb-3">
+                <label for="edit-movie-director" class="form-label">Director:</label>
+                <input type="text" class="form-control" id="edit-movie-director">
+            </div>
+
+            <div class="mb-3">
+                <label for="edit-movie-genre" class="form-label">Genre:</label>
+                <input type="text" class="form-control" id="edit-movie-genre">
+            </div>
+            <button class="btn btn-success" id="edit-movie-save" onclick="saveMovieChanges()">Save Changes</button>
+        </div>
+        <div id="add-book" hidden>
+            <h2>Add Book</h2>
+            <div class="mb-3">
+                <label for="add-book-title" class="form-label">Title:</label>
+                <input type="text" class="form-control" id="add-book-title">
+            </div>
+
+            <div class="mb-3">
+                <label for="add-book-author" class="form-label">Author:</label>
+                <input type="text" class="form-control" id="add-book-author">
+            </div>
+
+            <div class="mb-3">
+                <label for="add-book-genre" class="form-label">Genre:</label>
+                <input type="text" class="form-control" id="add-book-genre">
+            </div>
+
+            <button class="btn btn-success" onclick="addBook()">Add Book</button>
+        </div>
+        <div id="add-movie" hidden>
+            <h2>Add Movie</h2>
+            <div class="mb-3">
+                <label for="add-movie-title" class="form-label">Title:</label>
+                <input type="text" class="form-control" id="add-movie-title">
+            </div>
+
+            <div class="mb-3">
+                <label for="add-movie-director" class="form-label">Director:</label>
+                <input type="text" class="form-control" id="add-movie-director">
+            </div>
+
+            <div class="mb-3">
+                <label for="add-movie-genre" class="form-label">Genre:</label>
+                <input type="text" class="form-control" id="add-movie-genre">
+            </div>
+
+            <button class="btn btn-success" onclick="addMovie()">Add Movie</button>
+        </div>
+        <div id="user-books-container" hidden>
+            <h2>User Books</h2>
+            <table class="table" id="user-books-table">
+            </table>
+        </div>
+        <div id="user-movies-container" hidden>
+            <h2>User Books</h2>
+            <table class="table" id="user-movies-table">
+            </table>
+        </div>
+    </div>
+    </div>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <!-- BootstrapTable JS -->
+    <script src="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.js"></script>
+    <script src="/script.js" async defer></script>
+</body>
+
+</html>
